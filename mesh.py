@@ -116,7 +116,7 @@ class Mesh():
 
     def write_vtk(self, filename: str, scalar_field: list = None) -> None:
         original_stdout = sys.stdout
-        with open(filename, 'w') as f:
+        with open(filename, 'w', encoding="utf8") as f:
             sys.stdout = f  # Change the standard output to the file we created.
 
             print("""# vtk DataFile Version 3.0

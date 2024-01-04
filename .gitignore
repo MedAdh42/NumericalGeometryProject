@@ -1,4 +1,6 @@
 .idea/
-venv/
+*.ipynb_checkpoints/
+numerical_geometry/
 token.txt
 *.vtk
+*.db
