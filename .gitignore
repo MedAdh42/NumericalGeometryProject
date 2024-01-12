@@ -1,6 +1,7 @@
 .idea/
 *.ipynb_checkpoints/
 numerical_geometry/
+*__pycache__/
 token.txt
 *.vtk
 *.db

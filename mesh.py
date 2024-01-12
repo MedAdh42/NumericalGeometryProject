@@ -1,5 +1,5 @@
-import numpy as np
 import sys
+import numpy as np
 
 
 class Mesh():
@@ -77,7 +77,7 @@ class Mesh():
     def prev(self, c: int) -> int:
         return (c // 3) * 3 + (c + 2) % 3
 
-    def next(self, c) -> int:
+    def next(self, c: int) -> int:
         return (c // 3) * 3 + 1
 
     def opposite(self, c: int) -> int:
@@ -107,9 +107,9 @@ class Mesh():
             ret = ret + ("f %d %d %d\n" % (t[0] + 1, t[1] + 1, t[2] + 1))
         return ret
 
-    def write_obj(self, filename):
+    def write_obj(self, filename: str) -> None:
         original_stdout = sys.stdout
-        with open(filename, 'w') as f:
+        with open(filename, 'w', encoding="utf8") as f:
             sys.stdout = f  # Change the standard output to the file we created.
             print(self)
             sys.stdout = original_stdout  # Reset the standard output to its original value
