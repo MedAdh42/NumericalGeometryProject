@@ -3,15 +3,15 @@ Author(s): Mohamed Aidahi, Abdrahmane Berete
 Date: 2023-12-26
 """
 import os
-
-from mesh import Mesh
-import numpy as np
-import scipy.sparse
-from scipy.sparse.linalg import lsmr
+import sys
+import importlib
 from pathlib import Path
 from argparse import ArgumentParser, ArgumentTypeError
-import importlib
-import sys
+
+import scipy.sparse
+from scipy.sparse.linalg import lsmr
+
+from mesh import Mesh
 
 
 def deform_mesh(model_path: Path, output_path: Path = None, horizon_const: float = 10, fault_const: float = 10):
@@ -27,7 +27,7 @@ def deform_mesh(model_path: Path, output_path: Path = None, horizon_const: float
     """
     # Read the model data
     m = Mesh(str(model_path.joinpath("slice.obj")))
-    attr = importlib.import_module(str(model_path)  +".attributes")
+    attr = importlib.import_module(str(model_path) + ".attributes")
 
     # Initialise the linear system
     A = scipy.sparse.lil_matrix((m.ncorners * 3, m.nverts * 2))
@@ -74,8 +74,8 @@ def deform_mesh(model_path: Path, output_path: Path = None, horizon_const: float
 
     for c in range(m.ncorners):  # lift all vertices of all horizons
         if attr.horizon_id[c] >= 0:
-            height = (1 + attr.horizon_id[c]) / 37.76  # arbitrarily chosen coeff to get a visually nice result
-            m.V[m.org(c)][2] = m.V[m.dst(c)][2] = height / 5
+            # height = (1 + attr.horizon_id[c]) / 37.76  # arbitrarily chosen coeff to get a visually nice result
+            m.V[m.org(c)][2] = m.V[m.dst(c)][2] = 0.01 * (1 + attr.horizon_id[c])
 
     for c in range(m.ncorners):  # lower vertices in faults
         if attr.is_fault[c]:
